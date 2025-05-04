@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Simple Page</title>
+  <title>My Vchi Page - the Scratch extension PythonBETA</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tuffy:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
@@ -21,13 +21,29 @@
 </head>
 <body>
 
-  <h1 class="heading">Welcome to My Simple Page!</h1>
-  <p class="paragraph">This text is styled with the Tuffy font.</p>
+  <h1 class="heading">Welcome!</h1>
+  <p class="paragraph">Come and see my PythonBeta extension for Scratch.</p>
 
   <script>
     // Your JavaScript code here
-    console.log("Hello from my script!");
+    console.log("Hello!");
   </script>
+<script>
+function downloadBlobData(fileContent, filename, fileType) {
+  const blob = new Blob([fileContent], { type: fileType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
-</body>
+// Example usage:
+const jsCode = "console.log('Hello from PythonBETA.js');";
+downloadBlobData(jsCode, 'PythonBETA.js', 'application/javascript');
+</script>
+  </body>
 </html>
