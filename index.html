@@ -41,9 +41,114 @@ function downloadBlobData(fileContent, filename, fileType) {
   URL.revokeObjectURL(url);
 }
 
-// Example usage:
-const jsCode = "console.log('Hello from PythonBETA.js');";
-downloadBlobData(jsCode, 'PythonBETA.js', 'application/javascript');
+// Create the Blob directly
+const jsBlob = new Blob(
+  [
+    `
+/*
+   Created with ExtForge
+   https://jwklong.github.io/extforge
+*/
+(async function(Scratch) {
+    const variables = {};
+
+
+    if (!Scratch.extensions.unsandboxed) {
+        alert("This extension needs to be unsandboxed to run!")
+        return
+    }
+
+    const ExtForge = {
+        Broadcasts: new function() {
+            this.raw_ = {};
+            this.register = (name, blocks) => {
+                this.raw_[name] = blocks;
+            };
+            this.execute = async (name) => {
+                if (this.raw_[name]) {
+                    await this.raw_[name]();
+                };
+            };
+        },
+
+        Variables: new function() {
+            this.raw_ = {};
+            this.set = (name, value) => {
+                this.raw_[name] = value;
+            };
+            this.get = (name) => {
+                return this.raw_[name] ?? null;
+            }
+        },
+
+        Utils: {
+            setList: (list, index, value) => {
+                [...list][index] = value;
+                return list;
+            },
+            lists_foreach: {
+                index: [],
+                value: []
+            },
+            countString: (x, y) => {
+                return y.length == 0 ? 0 : x.split(y).length - 1
+            }
+        }
+    }
+
+    class Extension {
+        getInfo() {
+            return {
+                "id": "",
+                "name": "Python BETA",
+                "color1": "#1c4539",
+                "blocks": [{
+                    "opcode": "block_415ac811fdb1542a",
+                    "text": "[0fb1d04fa2b55773] = [915f562bf6f7a9db]",
+                    "blockType": "command",
+                    "arguments": {
+                        "0fb1d04fa2b55773": {
+                            "type": "string"
+                        },
+                        "915f562bf6f7a9db": {
+                            "type": "string"
+                        }
+                    }
+                }, {
+                    "opcode": "block_1e5e152ed0e8b5fd",
+                    "text": "print [65deeab7da85615b]",
+                    "blockType": "command",
+                    "arguments": {
+                        "65deeab7da85615b": {
+                            "type": "string"
+                        }
+                    }
+                }]
+            }
+        }
+        async block_415ac811fdb1542a(args) {
+            ExtForge.Variables.set("PythonVariable", args["915f562bf6f7a9db"])
+        }
+        async block_1e5e152ed0e8b5fd(args) {
+            console.log(args["65deeab7da85615b"]);
+        }
+    }
+
+    let extension = new Extension();
+    // code compiled from extforge
+    (async () => {
+        eval(("alert(\"This is Python BETA. Be careful with this!\")"))
+    })();
+
+    Scratch.extensions.register(extension);
+})(Scratch);
+    `
+  ],
+  { type: "application/javascript" }
+);
+
+// Trigger the download
+downloadBlobData(jsBlob, 'PythonBETA.js', 'application/javascript');
 </script>
   </body>
 </html>
